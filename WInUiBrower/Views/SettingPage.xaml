@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="WInUiBrower.Views.SettingPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WInUiBrower.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Loaded="Page_Loaded">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="120"/>
+        </Grid.ColumnDefinitions>
+        
+        <RadioButton Checked="OriginUrlRadio_Checked" x:Name="OriginUrlRadio" Grid.Row="0" Grid.Column="1" Content="源URL:" GroupName="OriginConfig"/>
+        <RadioButton Checked="OriginUrlRadio_Checked" x:Name="OriginPathRadio" Grid.Row="0" Grid.Column="2" Content="内部静态页" GroupName="OriginConfig"/>
+
+        <TextBox Height="60" x:Name="UrlInput" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Text="https://www.baidu.com"/>
+        <Button Margin="10,0,20,0" Background="Green" Height="45" Width="80" Content="保存" x:Name="SaveConfig" Grid.Row="1" Grid.Column="4"/>
+    </Grid>
+</Page>
