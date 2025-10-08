@@ -1,0 +1,8 @@
+{
+  "AppName": "WinUiBrower2",
+  "OriginalPath": 1,
+  "Url": "https://www.baidu.com",
+  "FetchUrl": "http://localhost:8080",
+  "DeveloperMode": false,
+  "DisableRightClick": false
+}

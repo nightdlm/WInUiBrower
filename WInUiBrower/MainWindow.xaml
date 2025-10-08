@@ -6,22 +6,24 @@
     xmlns:local="using:WInUiBrower"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Title="服务器">
+    mc:Ignorable="d">
     
     <Window.SystemBackdrop>
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
     <Grid>
-        <NavigationView x:Name="RootNavigation" 
-                    SelectionChanged="RootNavigation_SelectionChanged"
-                    IsPaneOpen="True"
-                    OpenPaneLength="150">
-            <NavigationView.MenuItems>
-                <NavigationViewItem Icon="BrowsePhotos" Content="页面" Tag="WebServer" />
-            </NavigationView.MenuItems>
-            <Frame CacheMode="BitmapCache" x:Name="RootFrame"/>
+        <NavigationView
+            x:Name="RootNavigation" 
+            IsBackEnabled="False"
+            IsSettingsVisible="True" 
+            SelectionChanged="RootNavigation_SelectionChanged"
+            IsPaneOpen="False"
+            OpenPaneLength="150">
+                <NavigationView.MenuItems>
+                    <NavigationViewItem Icon="BrowsePhotos" Content="页面" Tag="WebServer" />
+                </NavigationView.MenuItems>
+                <Frame x:Name="RootFrame"/>
         </NavigationView>
     </Grid>
 </Window>

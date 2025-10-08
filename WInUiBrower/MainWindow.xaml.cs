@@ -1,4 +1,5 @@
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using WInUiBrower.Model;
 using WInUiBrower.Views;
@@ -14,16 +15,23 @@ namespace WInUiBrower
     public sealed partial class MainWindow : Window
     {
         private static string runtimePath = AppDomain.CurrentDomain.BaseDirectory;
+
         public MainWindow()
         {
             AppWindow.SetIcon(@$"{runtimePath}\Assets\logo.ico");
             InitializeComponent();
             MainWindow_Loaded();
+            this.Closed += (s, e) =>
+            {
+                DynamicContants.SaveToFile();
+            };
         }
 
         private void MainWindow_Loaded()
         {
-            if(DynamicContants.OriginalPath == Enums.Origin.Url) {
+           this.Title = DynamicContants.AppName;
+
+            if (DynamicContants.OriginalPath == Enums.Origin.Url) {
                 RootFrame.Navigate(typeof(BrowerPage));
             }
             else {
@@ -31,7 +39,7 @@ namespace WInUiBrower
             }
         }
 
-        private void RootNavigation_SelectionChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
+        private void RootNavigation_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
             if (args.IsSettingsSelected)
             {
@@ -39,13 +47,13 @@ namespace WInUiBrower
                 return;
             }
             // 获取选中的NavigationViewItem
-            var selectedItem = args.SelectedItem as Microsoft.UI.Xaml.Controls.NavigationViewItem;
+            var selectedItem = args.SelectedItem as NavigationViewItem;
 
 
             // 通过Tag属性进行筛选
             if (selectedItem?.Tag != null)
             {
-                string tag = selectedItem.Tag.ToString();
+                string tag = selectedItem?.Tag as string ?? string.Empty;
                 switch (tag)
                 {
                     case "WebServer":
