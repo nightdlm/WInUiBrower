@@ -33,7 +33,6 @@ namespace WInUiBrower.Model
         static DynamicContants()
         {
             LoadFromFile();
-            Console.WriteLine($"{AppName}启动成功！");
         }
 
         /// <summary>

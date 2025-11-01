@@ -18,10 +18,11 @@
             IsBackEnabled="False"
             IsSettingsVisible="True" 
             SelectionChanged="RootNavigation_SelectionChanged"
-            IsPaneOpen="False"
             OpenPaneLength="150">
                 <NavigationView.MenuItems>
-                    <NavigationViewItem Icon="BrowsePhotos" Content="页面" Tag="WebServer" />
+                    <NavigationViewItem Icon="BrowsePhotos" Content="页面浏览" Tag="WebServer" />
+                    <NavigationViewItem Icon="GoToStart" Content="服务管理" Tag="ServerManager" />
+                    <NavigationViewItem Icon="Manage" Content="状态监控" Tag="StatusMonitor" />
                 </NavigationView.MenuItems>
                 <Frame x:Name="RootFrame"/>
         </NavigationView>

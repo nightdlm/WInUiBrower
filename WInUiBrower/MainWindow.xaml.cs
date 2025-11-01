@@ -1,6 +1,8 @@
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Linq;
 using WInUiBrower.Model;
 using WInUiBrower.Views;
 
@@ -16,9 +18,12 @@ namespace WInUiBrower
     {
         private static string runtimePath = AppDomain.CurrentDomain.BaseDirectory;
 
+        // 获取到控制台参数
+        public static string[] args = Environment.GetCommandLineArgs();
+
         public MainWindow()
         {
-            AppWindow.SetIcon(@$"{runtimePath}\Assets\logo.ico");
+            //AppWindow.SetIcon(@$"{runtimePath}\Assets\logo.ico");
             InitializeComponent();
             MainWindow_Loaded();
             this.Closed += (s, e) =>
@@ -27,16 +32,40 @@ namespace WInUiBrower
             };
         }
 
+
+        private void CenterWindow()
+        {
+            // 获取窗口句柄
+            var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
+
+            // 获取 AppWindow
+            var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
+            var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
+
+            // 获取主显示器信息
+            var displayArea = Microsoft.UI.Windowing.DisplayArea.Primary;
+
+            // 计算居中位置
+            var centerX = (displayArea.WorkArea.Width - appWindow.Size.Width) / 2;
+            var centerY = (displayArea.WorkArea.Height - appWindow.Size.Height) / 2;
+
+            // 设置窗口位置
+            appWindow.Move(new Windows.Graphics.PointInt32(centerX, centerY));
+        }
+
         private void MainWindow_Loaded()
         {
-           this.Title = DynamicContants.AppName;
+            CenterWindow();
+            this.Title = DynamicContants.AppName;
+            
 
-            if (DynamicContants.OriginalPath == Enums.Origin.Url) {
-                RootFrame.Navigate(typeof(BrowerPage));
+            if (args.Contains("--console")) {
+                RootNavigation.IsPaneVisible = true;
+            } else {
+                RootNavigation.IsPaneVisible = false;
             }
-            else {
-                RootFrame.Navigate(typeof(BrowerPage));
-            }
+            RootFrame.Navigate(typeof(ServerManager));
+
         }
 
         private void RootNavigation_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
@@ -59,8 +88,15 @@ namespace WInUiBrower
                     case "WebServer":
                         RootFrame.Navigate(typeof(BrowerPage));
                         break;
+                    case "ServerManager":
+                        RootFrame.Navigate(typeof(ServerManager));
+                        break;
+                    case "StatusMonitor":
+                        RootFrame.Navigate(typeof(StatusMonitorPage));
+                        break;
                 }
             }
         }
+
     }
 }
