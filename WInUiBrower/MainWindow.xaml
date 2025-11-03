@@ -38,6 +38,7 @@
                     <NavigationViewItem Icon="BrowsePhotos" Content="页面浏览" Tag="WebServer" />
                     <NavigationViewItem Icon="GoToStart" Content="服务管理" Tag="ServerManager" />
                     <NavigationViewItem Icon="Manage" Content="状态监控" Tag="StatusMonitor" />
+                    <NavigationViewItem Icon="AllApps" Content="服务配置" Tag="ServerConfig" />
                 </NavigationView.MenuItems>
                 <Frame x:Name="RootFrame"/>
         </NavigationView>

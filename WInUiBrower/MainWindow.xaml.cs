@@ -98,6 +98,9 @@ namespace WInUiBrower
                     case "StatusMonitor":
                         RootFrame.Navigate(typeof(StatusMonitorPage));
                         break;
+                    case "ServerConfig":
+                        RootFrame.Navigate(typeof(ServerConfig));
+                        break;
                 }
             }
         }

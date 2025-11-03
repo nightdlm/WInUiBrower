@@ -14,7 +14,9 @@
     <Content Remove="Assets\logo.ico" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Controller\ConfigInfo.xaml" />
     <None Remove="Views\BrowerPage.xaml" />
+    <None Remove="Views\ServerConfig.xaml" />
     <None Remove="Views\ServerManager.xaml" />
     <None Remove="Views\SettingPage.xaml" />
     <None Remove="Views\StatusMonitorPage.xaml" />
@@ -36,6 +38,12 @@
     <None Update="Config\setting.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Controller\ConfigInfo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\ServerConfig.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\StatusMonitorPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
