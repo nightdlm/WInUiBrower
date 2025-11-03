@@ -13,9 +13,23 @@
     </Window.SystemBackdrop>
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="31" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <Grid x:Name="TitleBar" Grid.Row="0">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,0,0">
+                <ImageIcon x:Name="TitleIcon" Source="Assets/logo.ico" Width="16" Height="16" VerticalAlignment="Center" />
+                <TextBlock x:Name="TitleText" Text="服务管理" FontSize="15" FontFamily="Helvetica Neue" 
+                   VerticalAlignment="Center" Margin="8,0,0,0" />
+            </StackPanel>
+        </Grid>
+        
         <NavigationView
-            x:Name="RootNavigation" 
-            IsBackEnabled="False"
+            Grid.Row="1"
+            IsBackButtonVisible="Collapsed"
+            x:Name="RootNavigation"
             IsSettingsVisible="True" 
             SelectionChanged="RootNavigation_SelectionChanged"
             OpenPaneLength="150">

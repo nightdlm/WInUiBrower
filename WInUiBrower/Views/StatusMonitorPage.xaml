@@ -9,6 +9,62 @@
     mc:Ignorable="d">
 
     <Grid>
+        <ListView x:Name="ServicesListView" Margin="10">
+            <ListView.Header>
+                <Grid Padding="10" Background="{ThemeResource SystemBaseLowColor }">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="服务名" FontWeight="Bold" />
+                    <TextBlock Grid.Column="1" Text="PID" FontWeight="Bold" />
+                    <TextBlock Grid.Column="2" Text="端口" FontWeight="Bold" />
+                    <TextBlock Grid.Column="3" Text="状态" FontWeight="Bold" />
+                    <TextBlock Grid.Column="4" Text="启动时间" FontWeight="Bold" />
+                    <TextBlock Grid.Column="5" Text="操作" FontWeight="Bold" />
+                   
+                </Grid>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
 
+                        <!-- 服务名 -->
+                        <TextBlock Grid.Column="0" Text="{Binding ServiceName}" VerticalAlignment="Center" />
+
+                        <!-- PID -->
+                        <TextBlock Grid.Column="1" Text="{Binding PID}" VerticalAlignment="Center" />
+
+                        <!-- 端口 -->
+                        <TextBlock Grid.Column="2" Text="{Binding Port}" VerticalAlignment="Center" />
+
+                        <!-- 状态 -->
+                        <TextBlock Grid.Column="3" Text="{Binding Status}" VerticalAlignment="Center" />
+
+                        <!-- 操作按钮 -->
+                        <StackPanel Grid.Column="4" Orientation="Horizontal">
+                            <Button Content="启动" Margin="0,0,5,0" />
+                            <Button Content="重启" Margin="0,0,5,0"/>
+                            <Button Content="停止"/>
+                        </StackPanel>
+
+                        <!-- 启动时间 -->
+                        <TextBlock Grid.Column="5" Text="{Binding LastStartTime}" VerticalAlignment="Center" />
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>

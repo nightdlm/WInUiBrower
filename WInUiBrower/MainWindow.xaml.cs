@@ -23,8 +23,10 @@ namespace WInUiBrower
 
         public MainWindow()
         {
-            //AppWindow.SetIcon(@$"{runtimePath}\Assets\logo.ico");
+            AppWindow.SetTaskbarIcon(@$"{runtimePath}\Assets\logo.ico");
             InitializeComponent();
+            // 设置自定义标题栏
+            ExtendsContentIntoTitleBar = true;
             MainWindow_Loaded();
             this.Closed += (s, e) =>
             {
