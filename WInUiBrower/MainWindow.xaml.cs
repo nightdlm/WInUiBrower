@@ -1,8 +1,12 @@
+using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
+using WinRT.Interop;
 using WInUiBrower.Model;
 using WInUiBrower.Views;
 
@@ -16,18 +20,16 @@ namespace WInUiBrower
     /// </summary>
     public sealed partial class MainWindow : Window
     {
-        private static string runtimePath = AppDomain.CurrentDomain.BaseDirectory;
 
         // 获取到控制台参数
         public static string[] args = Environment.GetCommandLineArgs();
 
         public MainWindow()
         {
-            AppWindow.SetTaskbarIcon(@$"{runtimePath}\Assets\logo.ico");
             InitializeComponent();
-            // 设置自定义标题栏
-            ExtendsContentIntoTitleBar = true;
+
             MainWindow_Loaded();
+
             this.Closed += (s, e) =>
             {
                 DynamicContants.SaveToFile();
@@ -57,9 +59,9 @@ namespace WInUiBrower
 
         private void MainWindow_Loaded()
         {
+            // 设置自定义标题栏
+            ExtendsContentIntoTitleBar = true;
             CenterWindow();
-            this.Title = DynamicContants.AppName;
-            
 
             if (args.Contains("--console")) {
                 RootNavigation.IsPaneVisible = true;

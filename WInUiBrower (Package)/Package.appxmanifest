@@ -9,15 +9,15 @@
 
   <Identity
     Name="19d36882-c270-424b-99d2-c64deb8a3b27"
-    Publisher="CN=dlm"
-    Version="1.0.1.0" />
+    Publisher="CN=admin"
+    Version="1.0.3.0" />
 
   <mp:PhoneIdentity PhoneProductId="19d36882-c270-424b-99d2-c64deb8a3b27" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>WInUiBrower (Package)</DisplayName>
     <PublisherDisplayName>dlm</PublisherDisplayName>
-    <Logo>Images\StoreLogo.png</Logo>
+    <Logo>Images/logo.png</Logo>
   </Properties>
 
   <Dependencies>
@@ -38,7 +38,7 @@
         Description="WInUiBrower (Package)"
         BackgroundColor="transparent"
         Square150x150Logo="Images\Square150x150Logo.png"
-        Square44x44Logo="Images\Square44x44Logo.png">
+        Square44x44Logo="Images/logo.png">
         <uap:DefaultTile Wide310x150Logo="Images\Wide310x150Logo.png" />
         <uap:SplashScreen Image="Images\SplashScreen.png" />
       </uap:VisualElements>
