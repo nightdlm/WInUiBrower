@@ -31,8 +31,8 @@ namespace WInUiBrower.Views
         /// <param name="args"></param>
         private void InitWebView(WebView2 sender, CoreWebView2InitializedEventArgs args)
         {
-            sender.CoreWebView2.Settings.AreDevToolsEnabled = DynamicContants.DeveloperMode;
-            sender.CoreWebView2.Settings.AreDefaultContextMenusEnabled = DynamicContants.DisableRightClick;
+            sender.CoreWebView2.Settings.AreDevToolsEnabled = DynamicContants.Instance.DeveloperMode;
+            sender.CoreWebView2.Settings.AreDefaultContextMenusEnabled = DynamicContants.Instance.DisableRightClick;
 
         }
 
@@ -45,7 +45,7 @@ namespace WInUiBrower.Views
         {
             BrowerConfig.CoreWebView2Initialized += InitWebView;
 
-            BrowerConfig.Source = new Uri(DynamicContants.Url);
+            BrowerConfig.Source = new Uri(DynamicContants.Instance.Url);
             
         }
 

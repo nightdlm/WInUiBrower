@@ -6,6 +6,7 @@
     xmlns:local="using:WInUiBrower"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:WInUiBrower.Model"
     mc:Ignorable="d">
     
     <Window.SystemBackdrop>
@@ -21,7 +22,7 @@
         <Grid x:Name="TitleBar" Grid.Row="0">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,0,0">
                 <ImageIcon x:Name="TitleIcon" Source="Assets/logo.ico" Width="16" Height="16" VerticalAlignment="Center" />
-                <TextBlock x:Name="TitleText" Text="服务管理" FontSize="15" FontFamily="Helvetica Neue" 
+                <TextBlock x:Name="TitleText" Text="{x:Bind model:DynamicContants.Instance.AppName,Mode=TwoWay}" FontSize="15" FontFamily="Helvetica Neue" 
                    VerticalAlignment="Center" Margin="8,0,0,0" />
             </StackPanel>
         </Grid>

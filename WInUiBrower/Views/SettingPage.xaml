@@ -48,29 +48,29 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Margin="0,15" Grid.Row="{StaticResource RowIndex_AppNameLabel}" Grid.Column="1" Grid.ColumnSpan="1"  Text="应用名称:"/>
-            <TextBox Margin="10,10,10,10" x:Name="AppNameInput" Grid.Row="{StaticResource RowIndex_AppNameLabel}" Grid.Column="2" Grid.ColumnSpan="2" Text="{x:Bind model:DynamicContants.AppName,Mode=TwoWay}" LostFocus="AppNameInput_LostFocus"/>
+            <TextBox Margin="10,10,10,10" x:Name="AppNameInput" Grid.Row="{StaticResource RowIndex_AppNameLabel}" Grid.Column="2" Grid.ColumnSpan="2" Text="{x:Bind model:DynamicContants.Instance.AppName,Mode=TwoWay}"/>
 
             <!-- 分割线 -->
             <Border Grid.Row="{StaticResource RowIndex_Separator1}" Grid.Column="1" Grid.ColumnSpan="4" Background="Gray" Height="1"/>
 
             <RadioButton Checked="OriginUrlRadio_Checked" x:Name="OriginUrlRadio" Grid.Row="{StaticResource RowIndex_OriginUrlRadio}" Grid.Column="1" Content="源URL:" GroupName="OriginConfig"/>
 
-            <TextBox Margin="10,10,10,10" x:Name="UrlInput" Grid.Row="{StaticResource RowIndex_UrlInput}" Grid.Column="1" Grid.ColumnSpan="3" Text="{x:Bind model:DynamicContants.Url}"/>
+            <TextBox Margin="10,10,10,10" x:Name="UrlInput" Grid.Row="{StaticResource RowIndex_UrlInput}" Grid.Column="1" Grid.ColumnSpan="3" Text="{x:Bind model:DynamicContants.Instance.Url}"/>
             <Button Margin="10,0,20,0" Background="ForestGreen" Content="保存" x:Name="SaveConfig" Click="SaveConfig_Click" Grid.Row="{StaticResource RowIndex_UrlInput}" Grid.Column="4"/>
 
             <RadioButton Checked="OriginUrlRadio_Checked" x:Name="OriginPathRadio" Grid.Row="{StaticResource RowIndex_OriginPathRadio}" Grid.Column="1" Content="内部静态页" GroupName="OriginConfig"/>
 
             <TextBlock Margin="0,15" Grid.Row="{StaticResource RowIndex_FetchUrlLabel}" Grid.Column="1" Grid.ColumnSpan="1"  Text="Fetch前缀:"/>
-            <TextBox Margin="10,10,10,10" x:Name="FetchUrl" Grid.Row="{StaticResource RowIndex_FetchUrlLabel}" Grid.Column="2" Grid.ColumnSpan="2" Text="{x:Bind model:DynamicContants.FetchUrl}"/>
+            <TextBox Margin="10,10,10,10" x:Name="FetchUrl" Grid.Row="{StaticResource RowIndex_FetchUrlLabel}" Grid.Column="2" Grid.ColumnSpan="2" Text="{x:Bind model:DynamicContants.Instance.FetchUrl}"/>
 
             <!-- 分割线 -->
             <Border Grid.Row="{StaticResource RowIndex_Separator2}" Grid.Column="1" Grid.ColumnSpan="4" Background="Gray" Height="1"/>
 
             <TextBlock Margin="0,15" Grid.Row="{StaticResource RowIndex_OpenDebug}" Grid.Column="1" Grid.ColumnSpan="1"  Text="启用开发者模式"/>
-            <ToggleSwitch Toggled="EnableDebug_Toggled" x:Name="EnableDebug" IsEnabled="{x:Bind model:DynamicContants.DisableRightClick}" IsOn="{x:Bind model:DynamicContants.DeveloperMode}" Grid.Row="{StaticResource RowIndex_OpenDebug}" Grid.Column="4" Grid.ColumnSpan="1"/>
+            <ToggleSwitch Toggled="EnableDebug_Toggled" x:Name="EnableDebug" IsEnabled="{x:Bind model:DynamicContants.Instance.DisableRightClick}" IsOn="{x:Bind model:DynamicContants.Instance.DeveloperMode}" Grid.Row="{StaticResource RowIndex_OpenDebug}" Grid.Column="4" Grid.ColumnSpan="1"/>
 
             <TextBlock Margin="0,15" Grid.Row="{StaticResource RowIndex_OpenContextMenu}" Grid.Column="1" Grid.ColumnSpan="2"  Text="启用默认右键菜单"/>
-            <ToggleSwitch Toggled="EnableContextMenu_Toggled" x:Name="EnableContextMenu" IsOn="{x:Bind model:DynamicContants.DisableRightClick}" Grid.Row="{StaticResource RowIndex_OpenContextMenu}" Grid.Column="4" Grid.ColumnSpan="1"/>
+            <ToggleSwitch Toggled="EnableContextMenu_Toggled" x:Name="EnableContextMenu" IsOn="{x:Bind model:DynamicContants.Instance.DisableRightClick}" Grid.Row="{StaticResource RowIndex_OpenContextMenu}" Grid.Column="4" Grid.ColumnSpan="1"/>
 
         </Grid>
     </ScrollViewer>

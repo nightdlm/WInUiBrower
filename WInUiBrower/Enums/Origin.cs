@@ -1,6 +1,6 @@
 ﻿namespace WInUiBrower.Enums
 {
-    enum Origin
+    public enum Origin
     {
         Url,
         LocalFile

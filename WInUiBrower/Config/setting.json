@@ -4,5 +4,15 @@
   "Url": "https://www.baidu.com",
   "FetchUrl": "http://localhost:8080",
   "DeveloperMode": false,
-  "DisableRightClick": false
+  "DisableRightClick": false,
+  "Items": [
+    {
+      "Key": "test",
+      "WorkingDirectory": "",
+      "Args": "",
+      "Port": 0,
+      "DelayPortDetect": false,
+      "WaitExit": false
+    }
+  ]
 }

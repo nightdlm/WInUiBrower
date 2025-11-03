@@ -21,14 +21,14 @@ namespace WInUiBrower.Views
         // 初始化
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if (DynamicContants.OriginalPath == Enums.Origin.Url) {
+            if (DynamicContants.Instance.OriginalPath == Enums.Origin.Url) {
                 OriginUrlRadio.SetValue(RadioButton.IsCheckedProperty, true);
                 UrlInput.IsEnabled = true;
                 SaveConfig.IsEnabled = true;
                 FetchUrl.IsEnabled = false;
             }
 
-            if (DynamicContants.OriginalPath == Enums.Origin.LocalFile) {
+            if (DynamicContants.Instance.OriginalPath == Enums.Origin.LocalFile) {
                 OriginPathRadio.SetValue(RadioButton.IsCheckedProperty, true);
                 UrlInput.IsEnabled = false;
                 SaveConfig.IsEnabled = false;
@@ -44,62 +44,26 @@ namespace WInUiBrower.Views
                 UrlInput.IsEnabled = true;
                 SaveConfig.IsEnabled = true;
                 FetchUrl.IsEnabled = false;
-                DynamicContants.OriginalPath = Enums.Origin.Url;
+                DynamicContants.Instance.OriginalPath = Enums.Origin.Url;
             }
             else
             {
                 UrlInput.IsEnabled = false;
                 SaveConfig.IsEnabled = false;
                 FetchUrl.IsEnabled = true;
-                DynamicContants.OriginalPath = Enums.Origin.LocalFile;
+                DynamicContants.Instance.OriginalPath = Enums.Origin.LocalFile;
             }
         }
 
         private void EnableDebug_Toggled(object sender, RoutedEventArgs e)
         {
-            DynamicContants.DeveloperMode = EnableDebug.IsOn;
+            DynamicContants.Instance.DeveloperMode = EnableDebug.IsOn;
         }
 
         private void EnableContextMenu_Toggled(object sender,RoutedEventArgs e)
         {
-            DynamicContants.DisableRightClick = EnableContextMenu.IsOn;
+            DynamicContants.Instance.DisableRightClick = EnableContextMenu.IsOn;
             EnableDebug.IsEnabled = EnableContextMenu.IsOn;
-        }
-
-        private async void AppNameInput_LostFocus(object sender,RoutedEventArgs e)
-        {
-            if (AppNameInput.Text == DynamicContants.AppName)
-            {
-                return;
-            }
-
-            DynamicContants.AppName = AppNameInput.Text;
-            // 显示重启确认对话框
-            ContentDialog restartDialog = new ContentDialog
-            {
-                Title = "重启应用",
-                Content = "应用名称已修改，需要重启应用才能生效。是否立即重启？",
-                PrimaryButtonText = "立即重启",
-                CloseButtonText = "稍后重启",
-                XamlRoot = this.XamlRoot
-            };
-
-            ContentDialogResult result = await restartDialog.ShowAsync();
-
-            if (result == ContentDialogResult.Primary)
-            {
-                // 立即重启应用
-                RestartApplication();
-            }
-        }
-
-        private void RestartApplication()
-        {
-            // 启动一个新的进程实例，使用当前应用的可执行文件路径
-            System.Diagnostics.Process.Start(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
-
-            // 退出当前应用实例
-            Application.Current.Exit();
         }
 
         private void SaveConfig_Click(object sender, RoutedEventArgs e)
@@ -107,16 +71,16 @@ namespace WInUiBrower.Views
             try
             {
                 new Uri(UrlInput.Text);
-                DynamicContants.Url = UrlInput.Text;
+                DynamicContants.Instance.Url = UrlInput.Text;
             }
             catch (ArgumentNullException) 
             {
                 ShowInvalidUriDialog("地址不能是空的。");
-                UrlInput.Text = DynamicContants.Url;
+                UrlInput.Text = DynamicContants.Instance.Url;
             } catch (UriFormatException)
             {
                 ShowInvalidUriDialog("地址错误，请检查。");
-                UrlInput.Text = DynamicContants.Url;
+                UrlInput.Text = DynamicContants.Instance.Url;
             }
         }
 
