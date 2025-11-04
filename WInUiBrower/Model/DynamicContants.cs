@@ -255,6 +255,20 @@ namespace WInUiBrower.Model
         private int _port = 0;
         private bool _delayPortDetect;
         private bool _waitExit;
+        private StatusEnum _status = StatusEnum.Stopped;
+
+        public StatusEnum Status
+        {
+            get => _status;
+            set
+            {
+                if (_status != value)
+                {
+                    _status = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public string ExecutableFile
         {
@@ -368,4 +382,11 @@ namespace WInUiBrower.Model
         }
     }
 
+
+    public enum StatusEnum
+    {
+        Stopped,
+        Starting,
+        Running
+    }
 }
