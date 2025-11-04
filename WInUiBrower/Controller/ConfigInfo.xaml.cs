@@ -33,6 +33,23 @@ namespace WInUiBrower.Controller
             var window = new Window();
             // ...
             var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
+            var folderPicker = new Windows.Storage.Pickers.FolderPicker();
+            WinRT.Interop.InitializeWithWindow.Initialize(folderPicker, hwnd);
+            var file = await folderPicker.PickSingleFolderAsync();
+
+            if (file != null)
+            {
+                if( DataContext is ServerItem Se)
+                Se.WorkingDirectory = file.Path;
+            }
+
+        }
+        private async void FileButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            var window = new Window();
+            // ...
+            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
             var fileOpenPicker = new Windows.Storage.Pickers.FileOpenPicker();
             fileOpenPicker.FileTypeFilter.Add(".exe");
             fileOpenPicker.FileTypeFilter.Add(".bat");
@@ -42,7 +59,7 @@ namespace WInUiBrower.Controller
             if (file != null)
             {
                 if( DataContext is ServerItem Se)
-                Se.WorkingDirectory = file.Name;
+                Se.ExecutableFile = file.Path + file.Name;
             }
 
         }

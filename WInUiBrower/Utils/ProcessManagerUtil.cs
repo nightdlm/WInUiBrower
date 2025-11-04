@@ -77,7 +77,7 @@ namespace WinUiBrowser.Utils
         /// <param name="arguments">程序参数</param>
         /// <param name="outputCallback">用于处理标准输出的回调函数</param>
         /// <param name="errorCallback">用于处理错误输出的回调函数</param>
-        public static void StartProcessWithJobObject(string jobKey, string fileName, string arguments,
+        public static void StartProcessWithJobObject(string jobKey, string workingDir , string fileName, string arguments,
             Action<string> outputCallback = null, Action<string> errorCallback = null)
         {
             // 如果指定键的作业对象不存在，则创建一个新的
@@ -108,7 +108,7 @@ namespace WinUiBrowser.Utils
             // 配置进程启动信息
             var processInfo = new ProcessStartInfo
             {
-                WorkingDirectory = AppContext.BaseDirectory,
+                WorkingDirectory = workingDir,
                 FileName = fileName,
                 Arguments = arguments,
                 UseShellExecute = false,

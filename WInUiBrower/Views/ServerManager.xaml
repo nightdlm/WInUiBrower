@@ -25,7 +25,7 @@
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="20,10,20,10">
             <ProgressBar x:Name="MainProgressBar" 
-                     Value="50"
+                     Value="0"
                      Maximum="100"
                      Height="20" 
                      Width="500"

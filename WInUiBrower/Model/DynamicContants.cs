@@ -6,7 +6,6 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
-using System.Threading.Tasks;
 using WInUiBrower.Enums;
 
 namespace WInUiBrower.Model
@@ -23,9 +22,23 @@ namespace WInUiBrower.Model
         private string _fetchUrl = "";
         private bool _developerMode = false;
         private bool _disableRightClick = false;
-        public ObservableCollection<ServerItem> _items { get; set; } = [];
+        private bool _isForwardSelfBrower = false;
+        private ObservableCollection<ServerItem> _items { get; set; } = [];
 
         public static DynamicContants Instance => _instance;
+
+        public bool IsForwardSelfBrower
+        {
+            get => _isForwardSelfBrower;
+            set
+            {
+                if (_isForwardSelfBrower != value)
+                {
+                    _isForwardSelfBrower = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public string AppName
         {
@@ -237,10 +250,24 @@ namespace WInUiBrower.Model
         private bool _isEnable = false;
         private string _key = "";
         private string _workingDirectory = "";
+        private string _executableFile = "";
         private string _args = "";
         private int _port = 0;
         private bool _delayPortDetect;
         private bool _waitExit;
+
+        public string ExecutableFile
+        {
+            get => _executableFile;
+            set
+            {
+                if (_executableFile != value)
+                {
+                    _executableFile = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public bool IsEnable
         {

@@ -21,12 +21,14 @@
         <x:Int32 x:Key="RowIndex_Separator2">6</x:Int32>
         <x:Int32 x:Key="RowIndex_OpenDebug">7</x:Int32>
         <x:Int32 x:Key="RowIndex_OpenContextMenu">8</x:Int32>
+        <x:Int32 x:Key="RowIndex_OpenBrower">9</x:Int32>
     </Page.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto" 
               HorizontalScrollBarVisibility="Disabled">
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
@@ -71,6 +73,9 @@
 
             <TextBlock Margin="0,15" Grid.Row="{StaticResource RowIndex_OpenContextMenu}" Grid.Column="1" Grid.ColumnSpan="2"  Text="启用默认右键菜单"/>
             <ToggleSwitch Toggled="EnableContextMenu_Toggled" x:Name="EnableContextMenu" IsOn="{x:Bind model:DynamicContants.Instance.DisableRightClick}" Grid.Row="{StaticResource RowIndex_OpenContextMenu}" Grid.Column="4" Grid.ColumnSpan="1"/>
+
+            <TextBlock Margin="0,15" Grid.Row="{StaticResource RowIndex_OpenBrower}" Grid.Column="1" Grid.ColumnSpan="2"  Text="使用内置WebView"/>
+            <ToggleSwitch x:Name="EnableSelfBrower" IsOn="{x:Bind model:DynamicContants.Instance.IsForwardSelfBrower,Mode=TwoWay}" Grid.Row="{StaticResource RowIndex_OpenBrower}" Grid.Column="4" Grid.ColumnSpan="1"/>
 
         </Grid>
     </ScrollViewer>
