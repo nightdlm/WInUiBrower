@@ -59,7 +59,7 @@ namespace WInUiBrower.Controller
             if (file != null)
             {
                 if( DataContext is ServerItem Se)
-                Se.ExecutableFile = file.Path + file.Name;
+                Se.ExecutableFile = file.Path;
             }
 
         }
