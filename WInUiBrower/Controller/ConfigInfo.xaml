@@ -25,7 +25,9 @@
                         <ToggleSwitch x:Name="EnableToggleSwitch" 
                                       Grid.Column="1" 
                                       MinWidth="0"
-                                      Margin="0,0,12,0"/>
+                                      Margin="0,0,12,0"
+                                      IsOn="{Binding IsEnable,Mode=TwoWay}"
+                                      />
                     </Grid>
                 </Expander.Header>
                 
@@ -37,9 +39,15 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="120"/>
                                 <ColumnDefinition Width="500"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="工作目录:" VerticalAlignment="Stretch" HorizontalAlignment="Left"/>
-                            <TextBox Grid.Column="1" Text="{Binding WorkingDirectory}" PlaceholderText="请输入工作目录" HorizontalAlignment="Stretch"/>
+                            <TextBlock Grid.Column="0" Text="启动程序:" VerticalAlignment="Stretch" HorizontalAlignment="Left"/>
+                            <TextBox Grid.Column="1" Text="{Binding WorkingDirectory,Mode=TwoWay}" 
+                                     PlaceholderText="请输入工作目录"
+                                     HorizontalAlignment="Stretch" 
+                                     IsReadOnly="True"
+                                     />
+                            <Button Grid.Column="2" Content="..." Click="WorkingDirectoryButton_Click" Margin="10,0,0,0"/>
                         </Grid>
 
                         <Grid>
@@ -48,7 +56,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="启动参数:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            <TextBox Grid.Column="1" Text="{Binding Args}" PlaceholderText="请输入启动参数"/>
+                            <TextBox Grid.Column="1" Text="{Binding Args,Mode=TwoWay}" PlaceholderText="请输入启动参数"/>
                         </Grid>
 
                         <Grid>
@@ -57,7 +65,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="端口号:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            <NumberBox Grid.Column="1" Value="{Binding Port}" PlaceholderText="请输入端口号" Minimum="1" Maximum="65535"/>
+                            <NumberBox Grid.Column="1" Value="{Binding Port,Mode=TwoWay}" PlaceholderText="请输入端口号" Minimum="0" Maximum="65535"/>
                         </Grid>
 
                         <Grid>
@@ -66,7 +74,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="延迟端口检测:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            <ToggleSwitch Grid.Column="1" IsOn="{Binding DelayPortDetect}"/>
+                            <ToggleSwitch Grid.Column="1" IsOn="{Binding DelayPortDetect,Mode=TwoWay}"/>
                         </Grid>
 
                         <Grid>
@@ -75,7 +83,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="等待进程退出:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            <ToggleSwitch Grid.Column="1" IsOn="{Binding WaitExit}"/>
+                            <ToggleSwitch Grid.Column="1" IsOn="{Binding WaitExit,Mode=TwoWay}"/>
                         </Grid>
                     </StackPanel>
                    

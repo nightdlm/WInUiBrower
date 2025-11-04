@@ -7,12 +7,13 @@
   "DisableRightClick": false,
   "Items": [
     {
+      "IsEnable": true,
       "Key": "test",
-      "WorkingDirectory": "",
-      "Args": "",
-      "Port": 0,
-      "DelayPortDetect": false,
-      "WaitExit": false
+      "WorkingDirectory": "cmd",
+      "Args": "--console",
+      "Port": 8080,
+      "DelayPortDetect": true,
+      "WaitExit": true
     }
   ]
 }

@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using WinRT.Interop;
 using WInUiBrower.Model;
 using WInUiBrower.Views;
@@ -30,9 +31,9 @@ namespace WInUiBrower
 
             MainWindow_Loaded();
 
-            this.Closed += (s, e) =>
+            this.Closed += async (s, e) =>
             {
-                DynamicContants.SaveToFile();
+                await Task.Run(() => DynamicContants.SaveToFile());
             };
         }
 
