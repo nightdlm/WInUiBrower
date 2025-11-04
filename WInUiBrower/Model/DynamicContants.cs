@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
@@ -22,7 +23,7 @@ namespace WInUiBrower.Model
         private string _fetchUrl = "";
         private bool _developerMode = false;
         private bool _disableRightClick = false;
-        private List<ServerItem> _items = [];
+        public ObservableCollection<ServerItem> _items { get; set; } = [];
 
         public static DynamicContants Instance => _instance;
 
@@ -108,7 +109,7 @@ namespace WInUiBrower.Model
             }
         }
 
-        public List<ServerItem> Items
+        public ObservableCollection<ServerItem> Items
         {
             get => _items;
             set
@@ -195,6 +196,20 @@ namespace WInUiBrower.Model
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+
+        /// <summary>
+        /// 从Items列表中移除指定的ServerItem对象（静态方法）
+        /// </summary>
+        /// <param name="item">要移除的ServerItem对象</param>
+        public static void RemoveServerItemStatic(ServerItem item)
+        {
+            if (_instance._items.Contains(item))
+            {
+                _instance._items.Remove(item);
+                _instance.OnPropertyChanged(nameof(Items));
+            }
+        }
+
     }
 
     public class Appconfig
@@ -205,7 +220,7 @@ namespace WInUiBrower.Model
         public string FetchUrl { get; set; } = "";
         public bool DeveloperMode { get; set; }
         public bool DisableRightClick { get; set; }
-        public List<ServerItem> Items { get; set; } = [];
+        public ObservableCollection<ServerItem> Items { get; set; } = new ObservableCollection<ServerItem>();
     }
 
     public class ServerItem : INotifyPropertyChanged

@@ -14,6 +14,24 @@
       "Port": 8080,
       "DelayPortDetect": true,
       "WaitExit": true
+    },
+    {
+      "IsEnable": true,
+      "Key": "test22",
+      "WorkingDirectory": "cmd",
+      "Args": "--console",
+      "Port": 999,
+      "DelayPortDetect": false,
+      "WaitExit": true
+    },
+    {
+      "IsEnable": false,
+      "Key": "test2256",
+      "WorkingDirectory": "cmd",
+      "Args": "--console",
+      "Port": 999,
+      "DelayPortDetect": false,
+      "WaitExit": true
     }
   ]
 }

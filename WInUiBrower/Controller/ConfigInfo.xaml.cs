@@ -47,5 +47,30 @@ namespace WInUiBrower.Controller
 
         }
 
+        private async void DeleteServerItem_Click(object sender, RoutedEventArgs e)
+        {
+            if(DataContext is ServerItem Se)
+            {
+                // 创建内容对话框
+                ContentDialog deleteDialog = new ContentDialog
+                {
+                    Title = "确认删除",
+                    Content = "确定要删除这个服务器配置吗？此操作不可撤销。",
+                    PrimaryButtonText = "删除",
+                    CloseButtonText = "取消",
+                    DefaultButton = ContentDialogButton.Close,
+                    XamlRoot = this.XamlRoot
+                };
+
+                // 显示对话框并等待用户选择
+                ContentDialogResult result = await deleteDialog.ShowAsync();
+
+                // 如果用户确认删除，则执行删除操作
+                if (result == ContentDialogResult.Primary)
+                {
+                    DynamicContants.RemoveServerItemStatic(Se);
+                }
+            }
+        }
     }
 }

@@ -11,18 +11,30 @@
     mc:Ignorable="d">
 
     <Grid>
-            <!-- 动态生成的控件列表 -->
-            <ItemsControl ItemsSource="{x:Bind model:DynamicContants.Instance.Items}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <component:ConfigInfo Margin="0,0,0,10"/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Vertical"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!-- 顶部工具栏 -->
+        <CommandBar Grid.Row="0" DefaultLabelPosition="Right">
+            <AppBarButton Icon="Add" Label="新增"/>
+        </CommandBar>
+        <!-- 动态生成的控件列表 -->
+        <ListView Grid.Row="1" 
+          ItemsSource="{x:Bind model:DynamicContants.Instance.Items,Mode=TwoWay}" 
+          AllowDrop="True"
+          CanReorderItems="True"
+          CanDragItems="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <component:ConfigInfo Margin="0,0,0,0"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Vertical"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+        </ListView>
     </Grid>
 </Page>
