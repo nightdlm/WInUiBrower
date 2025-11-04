@@ -127,25 +127,25 @@ namespace WinUiBrowser.Utils
             // 订阅输出事件
             process.OutputDataReceived += (sender, e) =>
             {
-                if (!string.IsNullOrEmpty(e.Data))
-                {
-                    // 使用WinUI的DispatcherQueue来更新UI
-                    Windows.ApplicationModel.Core.CoreApplication.MainView.DispatcherQueue.TryEnqueue(() =>
-                    {
-                        outputCallback?.Invoke(e.Data);
-                    });
-                }
+                //if (!string.IsNullOrEmpty(e.Data))
+                //{
+                //    // 使用WinUI的DispatcherQueue来更新UI
+                //    Windows.ApplicationModel.Core.CoreApplication.MainView.DispatcherQueue.TryEnqueue(() =>
+                //    {
+                //        outputCallback?.Invoke(e.Data);
+                //    });
+                //}
             };
 
             process.ErrorDataReceived += (sender, e) =>
             {
-                if (!string.IsNullOrEmpty(e.Data))
-                {
-                    Windows.ApplicationModel.Core.CoreApplication.MainView.DispatcherQueue.TryEnqueue(() =>
-                    {
-                        errorCallback?.Invoke(e.Data);
-                    });
-                }
+                //if (!string.IsNullOrEmpty(e.Data))
+                //{
+                //    Windows.ApplicationModel.Core.CoreApplication.MainView.DispatcherQueue.TryEnqueue(() =>
+                //    {
+                //        errorCallback?.Invoke(e.Data);
+                //    });
+                //}
             };
 
             // 启动进程

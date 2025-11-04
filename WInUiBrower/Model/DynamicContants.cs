@@ -201,6 +201,7 @@ namespace WInUiBrower.Model
             FetchUrl = config.FetchUrl;
             DeveloperMode = config.DeveloperMode;
             DisableRightClick = config.DisableRightClick;
+            IsForwardSelfBrower = config.IsForwardSelfBrower;
             Items = config.Items ?? [];
         }
 
@@ -242,6 +243,7 @@ namespace WInUiBrower.Model
         public string FetchUrl { get; set; } = "";
         public bool DeveloperMode { get; set; }
         public bool DisableRightClick { get; set; }
+        public bool IsForwardSelfBrower { get; set; }
         public ObservableCollection<ServerItem> Items { get; set; } = new ObservableCollection<ServerItem>();
     }
 
@@ -255,6 +257,18 @@ namespace WInUiBrower.Model
         private int _port = 0;
         private bool _delayPortDetect;
         private bool _waitExit;
+
+        private StatusEnums _status = StatusEnums.Stopped;
+
+        public StatusEnums Status
+        {
+            get => _status;
+            set
+            {
+                _status = value;
+                OnPropertyChanged();
+            }
+        }
 
         public string ExecutableFile
         {
@@ -366,6 +380,17 @@ namespace WInUiBrower.Model
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+    }
+
+
+    public enum StatusEnums
+    { 
+         Starting,
+         Started,
+         Stopping,
+         Stopped,
+         Error
+        
     }
 
 }

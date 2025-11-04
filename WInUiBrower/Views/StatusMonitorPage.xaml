@@ -19,16 +19,12 @@
                         <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="2*" />
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Text="服务名" FontWeight="Bold"/>
-                    <TextBlock Grid.Column="1" Text="PID" FontWeight="Bold" />
-                    <TextBlock Grid.Column="2" Text="端口" FontWeight="Bold" />
-                    <TextBlock Grid.Column="3" Text="状态" FontWeight="Bold" />
-                    <TextBlock Grid.Column="4" Text="启动时间" FontWeight="Bold" />
-                    <TextBlock Grid.Column="5" Text="操作" FontWeight="Bold" />
+                    <TextBlock Grid.Column="1" Text="端口" FontWeight="Bold" />
+                    <TextBlock Grid.Column="2" Text="状态" FontWeight="Bold" />
+                    <TextBlock Grid.Column="3" Text="操作" FontWeight="Bold" />
                    
                 </Grid>
             </ListView.Header>
@@ -39,32 +35,25 @@
                             <ColumnDefinition Width="1*" />
                             <ColumnDefinition Width="1*" />
                             <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1*" />
                             <ColumnDefinition Width="2*" />
                         </Grid.ColumnDefinitions>
 
                         <!-- 服务名 -->
                         <TextBlock Grid.Column="0" Text="{Binding Key}" VerticalAlignment="Center" />
 
-                        <!-- PID -->
-                        <TextBlock Grid.Column="1" Text="{Binding PID}" VerticalAlignment="Center" />
-
                         <!-- 端口 -->
-                        <TextBlock Grid.Column="2" Text="{Binding Port}" VerticalAlignment="Center" />
+                        <TextBlock Grid.Column="1" Text="{Binding Port}" VerticalAlignment="Center" />
 
                         <!-- 状态 -->
-                        <TextBlock Grid.Column="3" Text="{Binding Status}" VerticalAlignment="Center" />
+                        <TextBlock Grid.Column="2" Text="{Binding Status}" VerticalAlignment="Center" />
 
                         <!-- 操作按钮 -->
-                        <StackPanel Grid.Column="4" Orientation="Horizontal">
-                            <Button Content="启动" Margin="0,0,5,0" />
-                            <Button Content="重启" Margin="0,0,5,0"/>
-                            <Button Content="停止"/>
+                        <StackPanel Grid.Column="3" Orientation="Horizontal">
+                            <Button Name="Start" Content="启动" Margin="0,0,5,0" Click="Start_Click"/>
+                            <Button Name="ReStart" Content="重启" Margin="0,0,5,0" Click="ReStart_Click"/>
+                            <Button Name="Stop" Content="停止" Click="Stop_Click"/>
                         </StackPanel>
-
-                        <!-- 启动时间 -->
-                        <TextBlock Grid.Column="5" Text="{Binding LastStartTime}" VerticalAlignment="Center" />
+                        
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
