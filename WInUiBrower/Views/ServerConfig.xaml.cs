@@ -40,6 +40,7 @@ namespace WInUiBrower.Views
                 {
                     Key = dialog.Key,
                     WorkingDirectory = dialog.WorkingDirectory,
+                    ExecutableFile = dialog.ExecutableFile,
                     IsEnable = true, // 默认启用
                     Args = "",       // 默认空参数
                     Port = 0,     // 默认端口

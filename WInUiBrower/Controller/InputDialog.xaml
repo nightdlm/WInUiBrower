@@ -6,15 +6,66 @@
     Title="新增配置"
     PrimaryButtonText="确定"
     CloseButtonText="取消"
-    Loaded="ContentDialog_Loaded">
+    Loaded="ContentDialog_Loaded"
+    Style="{ThemeResource DefaultContentDialogStyle}">
 
-    <StackPanel Spacing="12">
-        <TextBox x:Name="KeyTextBox" Header="配置名称*" PlaceholderText="请输入配置名称" TextChanged="TextBox_TextChanged"/>
-        <TextBox x:Name="WorkingDirectoryTextBox" 
-                 Header="工作目录*" 
-                 PlaceholderText="请选择可执行文件"
-                 IsReadOnly="True"
-                 TextChanged="TextBox_TextChanged"/>
-        <Button Content="浏览..." Click="BrowseButton_Click"/>
+    <StackPanel Spacing="16" Padding="12">
+        <!-- 配置名称输入 -->
+        <TextBox x:Name="KeyTextBox" 
+                 Header="配置名称*" 
+                 PlaceholderText="请输入配置名称"
+                 TextChanged="TextBox_TextChanged"
+                />
+
+        <!-- 工作目录选择区域 -->
+        <StackPanel Spacing="8">
+            <TextBlock Text="工作目录*"/>
+            <Grid ColumnSpacing="8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="WorkingDirectoryTextBox" 
+                         Grid.Column="0"
+                         PlaceholderText="请选择工作目录"
+                         IsReadOnly="True"
+                         TextChanged="TextBox_TextChanged"
+                         />
+
+                <Button x:Name="BrowseDirectoryButton"
+                        Grid.Column="1"
+                        Content="&#xE838;"
+                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                        Click="BrowseDirectoryButton_Click"
+                        ToolTipService.ToolTip="浏览文件夹"/>
+            </Grid>
+        </StackPanel>
+
+        <!-- 可执行文件选择区域 -->
+        <StackPanel Spacing="8">
+            <TextBlock Text="可执行文件*" />
+            <Grid ColumnSpacing="8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="ExecutableFileTextBox" 
+                         Grid.Column="0"
+                         PlaceholderText="请选择可执行文件"
+                         IsReadOnly="True"
+                         TextChanged="TextBox_TextChanged"
+                         />
+
+                <Button x:Name="BrowseExecutableButton"
+                        Grid.Column="1"
+                        Content="&#xE8E5;"
+                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                        Click="BrowseExecutableButton_Click"
+                        ToolTipService.ToolTip="浏览可执行文件"/>
+            </Grid>
+        </StackPanel>
+
     </StackPanel>
 </ContentDialog>
