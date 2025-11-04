@@ -38,6 +38,9 @@
     <None Update="Config\setting.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Controller\InputDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Controller\ConfigInfo.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,5 +1,7 @@
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
+using System;
+using WInUiBrower.Controller;
 using WInUiBrower.Model;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -22,6 +24,31 @@ namespace WInUiBrower.Views
             DynamicContants.SaveToFile();
 
             base.OnNavigatedFrom(e);
+        }
+
+        private async void AppBarButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            var dialog = new InputDialog();
+            dialog.XamlRoot = this.XamlRoot;
+
+            var result = await dialog.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+                // 创建新的 ServerItem 实例
+                var newItem = new ServerItem
+                {
+                    Key = dialog.Key,
+                    WorkingDirectory = dialog.WorkingDirectory,
+                    IsEnable = true, // 默认启用
+                    Args = "",       // 默认空参数
+                    Port = 0,     // 默认端口
+                    DelayPortDetect = false,
+                    WaitExit = true
+                };
+
+                DynamicContants.AddServerItem(newItem);
+            }
         }
     }
 }

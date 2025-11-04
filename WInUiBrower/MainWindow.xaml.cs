@@ -1,13 +1,8 @@
-using Microsoft.UI;
-using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using WinRT.Interop;
 using WInUiBrower.Model;
 using WInUiBrower.Views;
 
@@ -31,9 +26,9 @@ namespace WInUiBrower
 
             MainWindow_Loaded();
 
-            this.Closed += async (s, e) =>
+            this.Closed += (s, e) =>
             {
-                await Task.Run(() => DynamicContants.SaveToFile());
+                 DynamicContants.SaveToFile();
             };
         }
 

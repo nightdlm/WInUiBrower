@@ -210,6 +210,15 @@ namespace WInUiBrower.Model
             }
         }
 
+        /// <summary>
+        /// 添加一个ServerItem对象到Items列表（静态方法）
+        /// </summary>
+        /// <param name="item"></param>
+        public static void AddServerItem(ServerItem item)
+        {
+            _instance._items.Add(item);
+        }
+
     }
 
     public class Appconfig

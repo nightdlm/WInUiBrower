@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
         <!-- 顶部工具栏 -->
         <CommandBar Grid.Row="0" DefaultLabelPosition="Right">
-            <AppBarButton Icon="Add" Label="新增"/>
+            <AppBarButton Icon="Add" Label="新增" Click="AppBarButton_Click"/>
         </CommandBar>
         <!-- 动态生成的控件列表 -->
         <ListView Grid.Row="1" 
