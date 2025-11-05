@@ -17,6 +17,8 @@ namespace WInUiBrower.Views;
 public sealed partial class ServerManager : Page
 {
 
+    private static bool isRunning = false;
+
     public ServerManager()
     {
         InitializeComponent();
@@ -74,7 +76,7 @@ public sealed partial class ServerManager : Page
                     catch (Exception ex)
                     {
                         // 启动某个服务时发生异常，停止所有已启动的服务
-                        StopAllStartedServices(successfullyStartedItems);
+                        ProcessManagerUtil.CloseAllJobObjects();
                         throw new Exception($"启动服务 {item.Key} 时发生错误: {ex.Message}", ex);
                     }
                 }
@@ -91,7 +93,7 @@ public sealed partial class ServerManager : Page
                     if (!ProcessManagerUtil.IsJobRunning(item.Key))
                     {
                         // 进程已退出，可能是异常退出，停止所有已启动的服务
-                        StopAllStartedServices(successfullyStartedItems);
+                        ProcessManagerUtil.CloseAllJobObjects();
                         throw new Exception($"服务 {item.Key} 在启动过程中意外退出");
                     }
 
@@ -112,7 +114,7 @@ public sealed partial class ServerManager : Page
             }
 
             MainProgressBar.Value = 100;
-
+            isRunning = true;
             if (DynamicContants.Instance.IsForwardSelfBrower)
             {
                 this.Frame.Navigate(typeof(BrowerPage));
@@ -138,32 +140,18 @@ public sealed partial class ServerManager : Page
         }
     }
 
-    /// <summary>
-    /// 停止所有已启动的服务
-    /// </summary>
-    /// <param name="startedItems">已启动的服务列表</param>
-    private void StopAllStartedServices(List<ServerItem> startedItems)
-    {
-        foreach (ServerItem item in startedItems)
-        {
-            if (ProcessManagerUtil.IsJobRunning(item.Key))
-            {
-                try
-                {
-                    ProcessManagerUtil.TerminateJobObject(item.Key);
-                }
-                catch
-                {
-                    // 忽略停止过程中可能出现的异常
-                }
-            }
-        }
-    }
 
     private void StopButton_Click(object sender, RoutedEventArgs e)
     {
+        ProcessManagerUtil.CloseAllJobObjects();
         StartButton.Visibility = Visibility.Visible;
         StopButton.Visibility = Visibility.Collapsed;
+        isRunning = false;
     }
 
+    private void Page_Loading(FrameworkElement sender, object args)
+    {
+        StopButton.Visibility = isRunning ? Visibility.Visible : Visibility.Collapsed;
+        StartButton.Visibility = isRunning ? Visibility.Collapsed : Visibility.Visible;
+    }
 }

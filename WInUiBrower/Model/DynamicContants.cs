@@ -201,6 +201,7 @@ namespace WInUiBrower.Model
             FetchUrl = config.FetchUrl;
             DeveloperMode = config.DeveloperMode;
             DisableRightClick = config.DisableRightClick;
+            IsForwardSelfBrower = config.IsForwardSelfBrower;
             Items = config.Items ?? [];
         }
 
@@ -242,6 +243,7 @@ namespace WInUiBrower.Model
         public string FetchUrl { get; set; } = "";
         public bool DeveloperMode { get; set; }
         public bool DisableRightClick { get; set; }
+        public bool IsForwardSelfBrower { get; set; }
         public ObservableCollection<ServerItem> Items { get; set; } = new ObservableCollection<ServerItem>();
     }
 
@@ -257,16 +259,15 @@ namespace WInUiBrower.Model
         private bool _waitExit;
         private StatusEnum _status = StatusEnum.Stopped;
 
-        public StatusEnum Status
+        private StatusEnums _status = StatusEnums.Stopped;
+
+        public StatusEnums Status
         {
             get => _status;
             set
             {
-                if (_status != value)
-                {
-                    _status = value;
-                    OnPropertyChanged();
-                }
+                _status = value;
+                OnPropertyChanged();
             }
         }
 
@@ -383,10 +384,14 @@ namespace WInUiBrower.Model
     }
 
 
-    public enum StatusEnum
-    {
-        Stopped,
-        Starting,
-        Running
+    public enum StatusEnums
+    { 
+         Starting,
+         Started,
+         Stopping,
+         Stopped,
+         Error
+        
     }
+
 }
