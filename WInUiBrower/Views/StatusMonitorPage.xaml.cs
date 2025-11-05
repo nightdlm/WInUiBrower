@@ -12,10 +12,12 @@ namespace WInUiBrower.Views;
 /// </summary>
 public sealed partial class StatusMonitorPage : Page
 {
+
     public StatusMonitorPage()
     {
         InitializeComponent();
         this.DataContext = DynamicContants.Instance;
+
     }
 
 
@@ -53,4 +55,5 @@ public sealed partial class StatusMonitorPage : Page
         }
 
     }
+
 }

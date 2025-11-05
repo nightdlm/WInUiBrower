@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using WInUiBrower.Enums;
+using WinUiBrowser.Utils;
 
 namespace WInUiBrower.Model
 {
@@ -249,6 +250,16 @@ namespace WInUiBrower.Model
 
     public class ServerItem : INotifyPropertyChanged
     {
+
+
+        private System.Threading.Timer _statusCheckTimer;
+
+        public ServerItem()
+        { 
+            _statusCheckTimer = new System.Threading.Timer(CheckStatus, null, 0, 1000);
+        }
+        
+
         private bool _isEnable = false;
         private string _key = "";
         private string _workingDirectory = "";
@@ -257,7 +268,6 @@ namespace WInUiBrower.Model
         private int _port = 0;
         private bool _delayPortDetect;
         private bool _waitExit;
-        private StatusEnum _status = StatusEnum.Stopped;
 
         private StatusEnums _status = StatusEnums.Stopped;
 
@@ -381,16 +391,28 @@ namespace WInUiBrower.Model
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        private void CheckStatus(object state)
+        {
+            // 这里实现实际的状态检查逻辑
+            StatusEnums newStatus = CheckServerStatus();
+            if (_status != newStatus)
+            {
+                Status = newStatus;
+            }
+        }
+
+        private StatusEnums CheckServerStatus()
+        {
+            return ProcessManagerUtil.IsJobRunning(Key) ? StatusEnums.Running : StatusEnums.Stopped;
+        }
     }
 
 
     public enum StatusEnums
     { 
-         Starting,
-         Started,
-         Stopping,
-         Stopped,
-         Error
+         Running,
+         Stopped
         
     }
 
