@@ -11,14 +11,14 @@
   <Identity
     Name="19d36882-c270-424b-99d2-c64deb8a3b27"
     Publisher="CN=admin"
-    Version="1.0.3.0" />
+    Version="1.0.14.0" />
 
   <mp:PhoneIdentity PhoneProductId="19d36882-c270-424b-99d2-c64deb8a3b27" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>WInUiBrower (Package)</DisplayName>
-    <PublisherDisplayName>dlm</PublisherDisplayName>
-    <Logo>Images/logo.png</Logo>
+    <DisplayName>Night</DisplayName>
+    <PublisherDisplayName>Night</PublisherDisplayName>
+    <Logo>Images\package.png</Logo>
   </Properties>
 
   <Dependencies>
@@ -36,10 +36,9 @@
       EntryPoint="$targetentrypoint$" uap18:RuntimeBehavior="windowsApp" uap18:TrustLevel="appContainer">
       <uap:VisualElements
         DisplayName="服务管理"
-        Description="WInUiBrower (Package)"
+        Description="服务编组一键启动器"
         BackgroundColor="transparent"
-        Square150x150Logo="Images\Square150x150Logo.png"
-        Square44x44Logo="Images/logo.png">
+        Square150x150Logo="Images\Square150x150Logo.png" Square44x44Logo="Images\logo.png">
         <uap:DefaultTile Wide310x150Logo="Images\Wide310x150Logo.png" />
         <uap:SplashScreen Image="Images\SplashScreen.png" />
       </uap:VisualElements>

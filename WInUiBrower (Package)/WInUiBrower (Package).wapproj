@@ -52,22 +52,22 @@
     <AppxPackageDir>D:\projects\winui_package\</AppxPackageDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <AppxBundle>Always</AppxBundle>
+    <AppxBundle>Never</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
-    <AppxBundle>Always</AppxBundle>
+    <AppxBundle>Never</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
-    <AppxBundle>Always</AppxBundle>
+    <AppxBundle>Never</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <AppxBundle>Always</AppxBundle>
+    <AppxBundle>Never</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
-    <AppxBundle>Always</AppxBundle>
+    <AppxBundle>Never</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
-    <AppxBundle>Always</AppxBundle>
+    <AppxBundle>Never</AppxBundle>
   </PropertyGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -75,13 +75,36 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\logo.png" />
+    <Content Include="Images\logo.altform-lightunplated_targetsize-16.png" />
+    <Content Include="Images\logo.altform-lightunplated_targetsize-24.png" />
+    <Content Include="Images\logo.altform-lightunplated_targetsize-256.png" />
+    <Content Include="Images\logo.altform-lightunplated_targetsize-32.png" />
+    <Content Include="Images\logo.altform-lightunplated_targetsize-48.png" />
+    <Content Include="Images\logo.altform-unplated_targetsize-16.png" />
+    <Content Include="Images\logo.altform-unplated_targetsize-24.png" />
+    <Content Include="Images\logo.altform-unplated_targetsize-256.png" />
+    <Content Include="Images\logo.altform-unplated_targetsize-32.png" />
+    <Content Include="Images\logo.altform-unplated_targetsize-48.png" />
+    <Content Include="Images\logo.scale-100.png" />
+    <Content Include="Images\logo.scale-125.png" />
+    <Content Include="Images\logo.scale-150.png" />
+    <Content Include="Images\logo.scale-200.png" />
+    <Content Include="Images\logo.scale-400.png" />
+    <Content Include="Images\logo.targetsize-16.png" />
+    <Content Include="Images\logo.targetsize-24.png" />
+    <Content Include="Images\logo.targetsize-256.png" />
+    <Content Include="Images\logo.targetsize-32.png" />
+    <Content Include="Images\logo.targetsize-48.png" />
+    <Content Include="Images\package.scale-100.png" />
+    <Content Include="Images\package.scale-125.png" />
+    <Content Include="Images\package.scale-150.png" />
+    <Content Include="Images\package.scale-200.png" />
+    <Content Include="Images\package.scale-400.png" />
     <Content Include="Images\SplashScreen.scale-200.png" />
     <Content Include="Images\LockScreenLogo.scale-200.png" />
     <Content Include="Images\Square150x150Logo.scale-200.png" />
     <Content Include="Images\Square44x44Logo.scale-200.png" />
     <Content Include="Images\Square44x44Logo.targetsize-24_altform-unplated.png" />
-    <Content Include="Images\StoreLogo.png" />
     <Content Include="Images\Wide310x150Logo.scale-200.png" />
     <None Include="WInUiBrower %28Package%29_TemporaryKey.pfx" />
   </ItemGroup>
