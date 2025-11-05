@@ -114,9 +114,7 @@ namespace WinUiBrowser.Utils
                 UseShellExecute = false,
                 RedirectStandardOutput = false,
                 RedirectStandardError = false,
-                CreateNoWindow = true,
-                StandardOutputEncoding = Encoding.UTF8,
-                StandardErrorEncoding = Encoding.UTF8
+                CreateNoWindow = true
             };
 
             Process process = new Process
@@ -125,28 +123,28 @@ namespace WinUiBrowser.Utils
             };
 
             // 订阅输出事件
-            process.OutputDataReceived += (sender, e) =>
-            {
-                //if (!string.IsNullOrEmpty(e.Data))
-                //{
-                //    // 使用WinUI的DispatcherQueue来更新UI
-                //    Windows.ApplicationModel.Core.CoreApplication.MainView.DispatcherQueue.TryEnqueue(() =>
-                //    {
-                //        outputCallback?.Invoke(e.Data);
-                //    });
-                //}
-            };
+            //process.OutputDataReceived += (sender, e) =>
+            //{
+            //    //if (!string.IsNullOrEmpty(e.Data))
+            //    //{
+            //    //    // 使用WinUI的DispatcherQueue来更新UI
+            //    //    Windows.ApplicationModel.Core.CoreApplication.MainView.DispatcherQueue.TryEnqueue(() =>
+            //    //    {
+            //    //        outputCallback?.Invoke(e.Data);
+            //    //    });
+            //    //}
+            //};
 
-            process.ErrorDataReceived += (sender, e) =>
-            {
-                //if (!string.IsNullOrEmpty(e.Data))
-                //{
-                //    Windows.ApplicationModel.Core.CoreApplication.MainView.DispatcherQueue.TryEnqueue(() =>
-                //    {
-                //        errorCallback?.Invoke(e.Data);
-                //    });
-                //}
-            };
+            //process.ErrorDataReceived += (sender, e) =>
+            //{
+            //    //if (!string.IsNullOrEmpty(e.Data))
+            //    //{
+            //    //    Windows.ApplicationModel.Core.CoreApplication.MainView.DispatcherQueue.TryEnqueue(() =>
+            //    //    {
+            //    //        errorCallback?.Invoke(e.Data);
+            //    //    });
+            //    //}
+            //};
 
             // 启动进程
             process.Start();
@@ -155,8 +153,8 @@ namespace WinUiBrowser.Utils
             jobProcesses[jobKey].Add(process);
 
             // 异步读取输出
-            process.BeginOutputReadLine();
-            process.BeginErrorReadLine();
+            //process.BeginOutputReadLine();
+            //process.BeginErrorReadLine();
 
             // 将进程分配给作业对象
             AssignProcessToJobObject(currentJobHandle, process.Handle);
