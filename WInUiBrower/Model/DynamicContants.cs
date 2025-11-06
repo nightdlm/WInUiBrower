@@ -8,7 +8,6 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Windows.Storage;
 using WInUiBrower.Enums;
-using WinUiBrowser.Utils;
 
 namespace WInUiBrower.Model
 {
@@ -148,7 +147,7 @@ namespace WInUiBrower.Model
         /// <summary>
         /// 保存配置到相对路径下的文件
         /// </summary>
-        public static void SaveToFile()
+        public async static void SaveToFile()
         {
             var settings = new Dictionary<string, object>();
             Type type = typeof(DynamicContants);
@@ -160,47 +159,42 @@ namespace WInUiBrower.Model
             }
 
             // 使用应用程序目录下的路径，与LoadFromFile保持一致
-            var localFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            string configDirectory = Path.Combine(localFolderPath, "config");
-            string fullPath = Path.Combine(localFolderPath, "config", "setting.json");
-
-            // 确保配置目录存在
-            if (!Directory.Exists(configDirectory))
-            {
-                Directory.CreateDirectory(configDirectory);
-            }
+            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+            StorageFile file = await localFolder.CreateFileAsync("setting.json", CreationCollisionOption.OpenIfExists);
 
             string jsonString = JsonSerializer.Serialize(settings, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(fullPath, jsonString); // 写入文件
+            await FileIO.WriteTextAsync(file, jsonString);
         }
 
         /// <summary>
         /// 从相对路径下的文件加载配置
         /// </summary>
-        public static void LoadFromFile()
+        public async static void LoadFromFile()
         {
 
             // 如果用户配置不存在，尝试从应用包目录加载默认配置
-            var localFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            string packageConfigPath = Path.Combine(localFolderPath, "config", "setting.json");
+            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+            IStorageItem file = await localFolder.TryGetItemAsync("setting.json");
 
-            if (File.Exists(packageConfigPath))
+            if(file == null)
             {
-                try
+                StorageFile newFile = await localFolder.CreateFileAsync("setting.json");
+                var emptyConfig = new Appconfig();
+                string jsonString = JsonSerializer.Serialize(emptyConfig, new JsonSerializerOptions { WriteIndented = true });
+                await FileIO.WriteTextAsync(newFile, jsonString);
+            } else
+            {
+                // 文件存在，读取内容
+                StorageFile existingFile = file as StorageFile;
+                string content = await FileIO.ReadTextAsync(existingFile);
+                if (!string.IsNullOrEmpty(content))
                 {
-                    string jsonString = File.ReadAllText(packageConfigPath);
-                if (!string.IsNullOrEmpty(jsonString))
-                {
-                    var config = JsonSerializer.Deserialize<Appconfig>(jsonString);
-                        // 假设你有一个 UpdateFromConfig(Appconfig config) 的方法来更新静态字段
+                    var config = JsonSerializer.Deserialize<Appconfig>(content);
+                    // 假设你有一个 UpdateFromConfig(Appconfig config) 的方法来更新静态字段
                     _instance.UpdateFromConfig(config);
                 }
             }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"读取配置文件失败: {ex.Message}");
-            }
-        }
+        
         }
 
         private void UpdateFromConfig(Appconfig config)
