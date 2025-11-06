@@ -1,4 +1,6 @@
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System;
 using WInUiBrower.Model;
 using WinUiBrowser.Utils;
 
@@ -18,6 +20,14 @@ public sealed partial class StatusMonitorPage : Page
         InitializeComponent();
         this.DataContext = DynamicContants.Instance;
 
+        this.Loaded += (s, e) =>
+        {
+            // 创建定时任务,定时检查服务状态并更新
+            var timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += Timer_Tick;
+            timer.Start();
+        };
     }
 
 
@@ -54,6 +64,37 @@ public sealed partial class StatusMonitorPage : Page
             ProcessManagerUtil.CloseJobObject(item.Key);
         }
 
+    }
+
+    // 创建定时任务,定时检查服务状态并更新
+    private void Timer_Tick(object sender, object e)
+    {
+        foreach (var item in DynamicContants.Instance.Items)
+        {
+            if (item.IsEnable)
+            {
+                if (ProcessManagerUtil.IsJobRunning(item.Key))
+                {
+                    if (item.Port != 0) {
+                        if (ProcessManagerUtil.IsPortInUse(item.Port))
+                        {
+                            item.Status = StatusEnums.Running;
+                        }
+                        else
+                        {
+                            item.Status = StatusEnums.Starting;
+                        }
+                    } else {
+                        item.Status = StatusEnums.Running;
+                    }
+                    
+                }
+                else
+                {
+                    item.Status = StatusEnums.Stopped;
+                }
+            }
+        }
     }
 
 }

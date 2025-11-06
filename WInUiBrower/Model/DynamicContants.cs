@@ -6,6 +6,7 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
+using Windows.Storage;
 using WInUiBrower.Enums;
 using WinUiBrowser.Utils;
 
@@ -178,6 +179,7 @@ namespace WInUiBrower.Model
         /// </summary>
         public static void LoadFromFile()
         {
+
             // 如果用户配置不存在，尝试从应用包目录加载默认配置
             var localFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             string packageConfigPath = Path.Combine(localFolderPath, "config", "setting.json");
@@ -257,15 +259,6 @@ namespace WInUiBrower.Model
 
     public class ServerItem : INotifyPropertyChanged
     {
-
-
-        private System.Threading.Timer _statusCheckTimer;
-
-        public ServerItem()
-        { 
-            _statusCheckTimer = new System.Threading.Timer(CheckStatus, null, 0, 1000);
-        }
-        
 
         private bool _isEnable = false;
         private string _key = "";
@@ -399,27 +392,14 @@ namespace WInUiBrower.Model
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private void CheckStatus(object state)
-        {
-            // 这里实现实际的状态检查逻辑
-            StatusEnums newStatus = CheckServerStatus();
-            if (_status != newStatus)
-            {
-                Status = newStatus;
-            }
-        }
-
-        private StatusEnums CheckServerStatus()
-        {
-            return ProcessManagerUtil.IsJobRunning(Key) ? StatusEnums.Running : StatusEnums.Stopped;
-        }
     }
 
 
     public enum StatusEnums
     { 
          Running,
-         Stopped
+         Stopped,
+         Starting
         
     }
 
