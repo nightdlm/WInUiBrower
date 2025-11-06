@@ -59,12 +59,15 @@ namespace WInUiBrower
             ExtendsContentIntoTitleBar = true;
             CenterWindow();
 
-            if (args.Contains("--console")) {
+            // 获取环境变量来决定是否显示导航面板
+            var consoleEnvVar = Environment.GetEnvironmentVariable("CONSOLE_MODE");
+            if (!string.IsNullOrEmpty(consoleEnvVar) && consoleEnvVar.ToLower() == "true") { 
                 RootNavigation.IsPaneVisible = true;
             } else {
                 RootNavigation.IsPaneVisible = false;
             }
-            RootFrame.Navigate(typeof(ServerManager));
+            var serverManagerItem = RootNavigation.MenuItems.OfType<NavigationViewItem>().FirstOrDefault(i => i.Tag?.ToString() == "ServerManager");
+            RootNavigation.SelectedItem = serverManagerItem;
 
         }
 

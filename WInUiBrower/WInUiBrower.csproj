@@ -35,9 +35,6 @@
     <None Update="Assets\logo.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Config\setting.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <Page Update="Controller\InputDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

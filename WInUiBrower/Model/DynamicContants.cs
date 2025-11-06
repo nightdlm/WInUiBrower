@@ -159,8 +159,15 @@ namespace WInUiBrower.Model
             }
 
             // 使用应用程序目录下的路径，与LoadFromFile保持一致
-            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            string fullPath = Path.Combine(baseDir, "config", "setting.json");
+            var localFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            string configDirectory = Path.Combine(localFolderPath, "config");
+            string fullPath = Path.Combine(localFolderPath, "config", "setting.json");
+
+            // 确保配置目录存在
+            if (!Directory.Exists(configDirectory))
+            {
+                Directory.CreateDirectory(configDirectory);
+            }
 
             string jsonString = JsonSerializer.Serialize(settings, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(fullPath, jsonString); // 写入文件
@@ -172,26 +179,26 @@ namespace WInUiBrower.Model
         public static void LoadFromFile()
         {
             // 如果用户配置不存在，尝试从应用包目录加载默认配置
-            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            string packageConfigPath = Path.Combine(baseDir, "config", "setting.json");
+            var localFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            string packageConfigPath = Path.Combine(localFolderPath, "config", "setting.json");
 
             if (File.Exists(packageConfigPath))
             {
                 try
                 {
                     string jsonString = File.ReadAllText(packageConfigPath);
-                    if (!string.IsNullOrEmpty(jsonString))
-                    {
-                        var config = JsonSerializer.Deserialize<Appconfig>(jsonString);
-                        // 假设你有一个 UpdateFromConfig(Appconfig config) 的方法来更新静态字段
-                        _instance.UpdateFromConfig(config);
-                    }
-                }
-                catch (Exception ex)
+                if (!string.IsNullOrEmpty(jsonString))
                 {
-                    System.Diagnostics.Debug.WriteLine($"读取配置文件失败: {ex.Message}");
+                    var config = JsonSerializer.Deserialize<Appconfig>(jsonString);
+                        // 假设你有一个 UpdateFromConfig(Appconfig config) 的方法来更新静态字段
+                    _instance.UpdateFromConfig(config);
                 }
             }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"读取配置文件失败: {ex.Message}");
+            }
+        }
         }
 
         private void UpdateFromConfig(Appconfig config)
