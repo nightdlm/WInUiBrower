@@ -10,8 +10,8 @@
 
   <Identity
     Name="19d36882-c270-424b-99d2-c64deb8a3b27"
-    Publisher="CN=6BBF5F6F-C023-4035-BB1E-903407A2A71D"
-    Version="1.0.17.0" />
+    Publisher="CN=dlm"
+    Version="1.0.21.0" />
 
   <mp:PhoneIdentity PhoneProductId="19d36882-c270-424b-99d2-c64deb8a3b27" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

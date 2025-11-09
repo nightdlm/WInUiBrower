@@ -17,12 +17,11 @@ namespace WInUiBrower.Views
         public ServerConfig()
         {
             InitializeComponent();
+            this.DataContext = DynamicContants.Instance;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            DynamicContants.SaveToFile();
-
             base.OnNavigatedFrom(e);
         }
 
@@ -48,7 +47,7 @@ namespace WInUiBrower.Views
                     WaitExit = true
                 };
 
-                DynamicContants.AddServerItem(newItem);
+                DynamicContants.Instance.Items.Add(newItem);
             }
         }
     }

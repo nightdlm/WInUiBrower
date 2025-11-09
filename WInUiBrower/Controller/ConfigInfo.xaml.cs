@@ -74,7 +74,7 @@ namespace WInUiBrower.Controller
                 // 如果用户确认删除，则执行删除操作
                 if (result == ContentDialogResult.Primary)
                 {
-                    DynamicContants.RemoveServerItemStatic(Se);
+                    DynamicContants.Instance.Items.Remove(Se);
                 }
             }
         }

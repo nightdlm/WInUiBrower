@@ -24,9 +24,8 @@
             Width="120" Height="50" FontSize="16" Visibility="Collapsed"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="20,10,20,10">
-            <ProgressBar x:Name="MainProgressBar" 
-                     Value="0"
+        <StackPanel Name="ProgressBar" Visibility="Collapsed" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="20,10,20,10">
+            <ProgressBar x:Name="MainProgressBar"
                      Maximum="100"
                      Height="20" 
                      Width="500"

@@ -26,9 +26,9 @@ namespace WInUiBrower
 
             MainWindow_Loaded();
 
-            this.Closed += (s, e) =>
+            this.Closed += async (s, e) =>
             {
-                 DynamicContants.SaveToFile();
+                 await DynamicContants.SaveAsync();
             };
         }
 

@@ -19,6 +19,8 @@ public sealed partial class ServerManager : Page
 
     private static bool isRunning = false;
 
+    private static double CurrentValue = 0;
+
     public ServerManager()
     {
         InitializeComponent();
@@ -26,6 +28,7 @@ public sealed partial class ServerManager : Page
 
     private async void StartButton_Click(object sender, RoutedEventArgs e)
     {
+        ProgressBar.Visibility = Visibility.Visible;
         StopButton.Visibility = Visibility.Visible;
         StartButton.Visibility = Visibility.Collapsed;
 
@@ -38,9 +41,17 @@ public sealed partial class ServerManager : Page
                 count++;
             }
         }
+        if(count == 0)
+        {
+            if (DynamicContants.Instance.IsForwardSelfBrower)
+            {
+                this.Frame.Navigate(typeof(BrowerPage));
+            }
+            return;
+        }
 
-        MainProgressBar.Value = 0;
-        List<ServerItem> successfullyStartedItems = new List<ServerItem>(); // 记录成功启动的服务
+        MainProgressBar.Value = CurrentValue;
+        List<ServerItem> successfullyStartedItems = []; // 记录成功启动的服务
         List<ServerItem> jobKeys = [];
 
         try
@@ -65,8 +76,9 @@ public sealed partial class ServerManager : Page
 
                         if (!item.DelayPortDetect)
                         {
-                            await ProcessManagerUtil.WaitForPortOccupiedAsync(item.Port);
+                            ProcessManagerUtil.WaitForPortOccupied(item.Port,60);
                             MainProgressBar.Value = MainProgressBar.Value + 100 / count;
+                            CurrentValue = MainProgressBar.Value;
                         }
                         else
                         {
@@ -97,7 +109,8 @@ public sealed partial class ServerManager : Page
                         throw new Exception($"服务 {item.Key} 在启动过程中意外退出");
                     }
 
-                    if (item.Port == 0) {
+                    if (item.Port == 0)
+                    {
                         jobKeys.RemoveAt(i);
                         MainProgressBar.Value = MainProgressBar.Value + 100 / count;
                         continue;
@@ -114,6 +127,7 @@ public sealed partial class ServerManager : Page
             }
 
             MainProgressBar.Value = 100;
+            CurrentValue = 100;
             isRunning = true;
             if (DynamicContants.Instance.IsForwardSelfBrower)
             {
@@ -126,7 +140,7 @@ public sealed partial class ServerManager : Page
             StartButton.Visibility = Visibility.Visible;
             StopButton.Visibility = Visibility.Collapsed;
             MainProgressBar.Value = 0;
-
+            CurrentValue = MainProgressBar.Value;
             // 显示错误对话框告知用户
             var dialog = new ContentDialog
             {
@@ -137,6 +151,9 @@ public sealed partial class ServerManager : Page
             };
 
             await dialog.ShowAsync();
+        }
+        finally {
+            ProgressBar.Visibility = Visibility.Collapsed;
         }
     }
 
@@ -151,7 +168,27 @@ public sealed partial class ServerManager : Page
 
     private void Page_Loading(FrameworkElement sender, object args)
     {
-        StopButton.Visibility = isRunning ? Visibility.Visible : Visibility.Collapsed;
-        StartButton.Visibility = isRunning ? Visibility.Collapsed : Visibility.Visible;
+        if (isRunning)
+        {
+            StopButton.Visibility = Visibility.Visible;
+            StartButton.Visibility = Visibility.Collapsed;
+
+            if (CurrentValue != 100)
+            {
+                ProgressBar.Visibility = Visibility.Visible;
+                MainProgressBar.Value = CurrentValue;
+            }
+            else {
+                MainProgressBar.Value = 0;
+                ProgressBar.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        else {
+            StopButton.Visibility = Visibility.Collapsed;
+            StartButton.Visibility = Visibility.Visible;
+        }
+
+        
     }
 }

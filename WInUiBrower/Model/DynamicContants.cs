@@ -1,400 +1,94 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.IO;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text.Json;
+﻿using Newtonsoft.Json;
+using System;
+using System.Threading.Tasks;
 using Windows.Storage;
-using WInUiBrower.Enums;
 
 namespace WInUiBrower.Model
 {
-    class DynamicContants : INotifyPropertyChanged
+    class DynamicContants
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
+        // 配置文件名
+        private const string ConfigFileName = "setting.json";
 
-        private static readonly DynamicContants _instance = new DynamicContants();
+        private DynamicContants() { }
 
-        private string _appName = "";
-        private Origin _originalPath = Origin.Url;
-        private string _url = "";
-        private string _fetchUrl = "";
-        private bool _developerMode = false;
-        private bool _disableRightClick = false;
-        private bool _isForwardSelfBrower = false;
-        private ObservableCollection<ServerItem> _items { get; set; } = [];
+        // 添加私有静态实例字段
+        private static readonly SystemInfo _instance = new();
 
-        public static DynamicContants Instance => _instance;
-
-        public bool IsForwardSelfBrower
-        {
-            get => _isForwardSelfBrower;
-            set
-            {
-                if (_isForwardSelfBrower != value)
-                {
-                    _isForwardSelfBrower = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public string AppName
-        {
-            get => _appName;
-            set
-            {
-                if (_appName != value)
-                {
-                    _appName = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public Origin OriginalPath
-        {
-            get => _originalPath;
-            set
-            {
-                if (_originalPath != value)
-                {
-                    _originalPath = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        // 源url地址
-        public string Url
-        {
-            get => _url;
-            set
-            {
-                if (_url != value)
-                {
-                    _url = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        // fetch地址
-        public string FetchUrl
-        {
-            get => _fetchUrl;
-            set
-            {
-                if (_fetchUrl != value)
-                {
-                    _fetchUrl = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        // 是否启用开发者模式
-        public bool DeveloperMode
-        {
-            get => _developerMode;
-            set
-            {
-                if (_developerMode != value)
-                {
-                    _developerMode = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        // 禁用右键点击
-        public bool DisableRightClick
-        {
-            get => _disableRightClick;
-            set
-            {
-                if (_disableRightClick != value)
-                {
-                    _disableRightClick = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public ObservableCollection<ServerItem> Items
-        {
-            get => _items;
-            set
-            {
-                if (_items != value)
-                {
-                    _items = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        // 提供公共静态属性访问实例
+        public static SystemInfo Instance => _instance;
 
         /// <summary>
         /// 静态构造函数，在类首次被使用时自动调用
         /// </summary>
         static DynamicContants()
         {
-            LoadFromFile();
+            // 应用启动时加载配置
+            _ = LoadAsync();
         }
 
         /// <summary>
-        /// 保存配置到相对路径下的文件
+        /// 保存配置到本地文件
         /// </summary>
-        public async static void SaveToFile()
+        public static async Task SaveAsync()
         {
-            var settings = new Dictionary<string, object>();
-            Type type = typeof(DynamicContants);
-            PropertyInfo[] properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
-
-            foreach (PropertyInfo property in properties)
+            try
             {
-                settings[property.Name] = property.GetValue(_instance);
+                // 获取本地存储文件夹
+                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+
+                // 创建或打开配置文件
+                StorageFile configFile = await localFolder.CreateFileAsync(
+                    ConfigFileName,
+                    CreationCollisionOption.ReplaceExisting
+                );
+
+                // 序列化SystemInfo实例为JSON
+                string jsonContent = JsonConvert.SerializeObject(_instance, Newtonsoft.Json.Formatting.Indented);
+
+                // 写入文件
+                await FileIO.WriteTextAsync(configFile, jsonContent);
             }
-
-            // 使用应用程序目录下的路径，与LoadFromFile保持一致
-            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-            StorageFile file = await localFolder.CreateFileAsync("setting.json", CreationCollisionOption.OpenIfExists);
-
-            string jsonString = JsonSerializer.Serialize(settings, new JsonSerializerOptions { WriteIndented = true });
-            await FileIO.WriteTextAsync(file, jsonString);
-        }
-
-        /// <summary>
-        /// 从相对路径下的文件加载配置
-        /// </summary>
-        public async static void LoadFromFile()
-        {
-
-            // 如果用户配置不存在，尝试从应用包目录加载默认配置
-            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-            IStorageItem file = await localFolder.TryGetItemAsync("setting.json");
-
-            if(file == null)
+            catch (Exception ex)
             {
-                StorageFile newFile = await localFolder.CreateFileAsync("setting.json");
-                var emptyConfig = new Appconfig();
-                string jsonString = JsonSerializer.Serialize(emptyConfig, new JsonSerializerOptions { WriteIndented = true });
-                await FileIO.WriteTextAsync(newFile, jsonString);
-            } else
-            {
-                // 文件存在，读取内容
-                StorageFile existingFile = file as StorageFile;
-                string content = await FileIO.ReadTextAsync(existingFile);
-                if (!string.IsNullOrEmpty(content))
-                {
-                    var config = JsonSerializer.Deserialize<Appconfig>(content);
-                    // 假设你有一个 UpdateFromConfig(Appconfig config) 的方法来更新静态字段
-                    _instance.UpdateFromConfig(config);
-                }
+                // 记录保存配置时的异常（如果ErrorLog可用）
+                System.Diagnostics.Debug.WriteLine($"保存配置失败：{ex.Message}");
             }
-        
-        }
-
-        private void UpdateFromConfig(Appconfig config)
-        {
-            AppName = config.AppName;
-            OriginalPath = config.OriginalPath;
-            Url = config.Url;
-            FetchUrl = config.FetchUrl;
-            DeveloperMode = config.DeveloperMode;
-            DisableRightClick = config.DisableRightClick;
-            IsForwardSelfBrower = config.IsForwardSelfBrower;
-            Items = config.Items ?? [];
-        }
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
 
         /// <summary>
-        /// 从Items列表中移除指定的ServerItem对象（静态方法）
+        /// 从本地文件加载配置
         /// </summary>
-        /// <param name="item">要移除的ServerItem对象</param>
-        public static void RemoveServerItemStatic(ServerItem item)
+        public static async Task LoadAsync()
         {
-            if (_instance._items.Contains(item))
+            try
             {
-                _instance._items.Remove(item);
-                _instance.OnPropertyChanged(nameof(Items));
-            }
-        }
+                // 获取本地存储文件夹
+                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
 
-        /// <summary>
-        /// 添加一个ServerItem对象到Items列表（静态方法）
-        /// </summary>
-        /// <param name="item"></param>
-        public static void AddServerItem(ServerItem item)
-        {
-            _instance._items.Add(item);
-        }
+                // 尝试获取配置文件
+                StorageFile configFile = await localFolder.TryGetItemAsync(ConfigFileName) as StorageFile;
 
-    }
-
-    public class Appconfig
-    {
-        public string AppName { get; set; } = "";
-        public Origin OriginalPath { get; set; }
-        public string Url { get; set; } = "";
-        public string FetchUrl { get; set; } = "";
-        public bool DeveloperMode { get; set; }
-        public bool DisableRightClick { get; set; }
-        public bool IsForwardSelfBrower { get; set; }
-        public ObservableCollection<ServerItem> Items { get; set; } = new ObservableCollection<ServerItem>();
-    }
-
-    public class ServerItem : INotifyPropertyChanged
-    {
-
-        private bool _isEnable = false;
-        private string _key = "";
-        private string _workingDirectory = "";
-        private string _executableFile = "";
-        private string _args = "";
-        private int _port = 0;
-        private bool _delayPortDetect;
-        private bool _waitExit;
-
-        private StatusEnums _status = StatusEnums.Stopped;
-
-        public StatusEnums Status
-        {
-            get => _status;
-            set
-            {
-                _status = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public string ExecutableFile
-        {
-            get => _executableFile;
-            set
-            {
-                if (_executableFile != value)
+                if (configFile != null)
                 {
-                    _executableFile = value;
-                    OnPropertyChanged();
+                    // 读取文件内容
+                    string jsonContent = await FileIO.ReadTextAsync(configFile);
+
+                    if (!string.IsNullOrEmpty(jsonContent))
+                    {
+                        // 反序列化JSON到现有实例（而不是创建新实例）
+                        JsonConvert.PopulateObject(jsonContent, _instance);
+                    }
                 }
             }
-        }
-
-        public bool IsEnable
-        {
-            get => _isEnable;
-            set
+            catch (Exception ex)
             {
-                if (_isEnable != value)
-                {
-                    _isEnable = value;
-                    OnPropertyChanged();
-                }
+                // 记录加载配置时的异常
+                System.Diagnostics.Debug.WriteLine($"加载配置失败：{ex.Message}");
             }
         }
 
-        public string Key
-        {
-            get => _key;
-            set
-            {
-                if (_key != value)
-                {
-                    _key = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public string WorkingDirectory
-        {
-            get => _workingDirectory;
-            set
-            {
-                if (_workingDirectory != value)
-                {
-                    _workingDirectory = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public string Args
-        {
-            get => _args;
-            set
-            {
-                if (_args != value)
-                {
-                    _args = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public int Port
-        {
-            get => _port;
-            set
-            {
-                if (_port != value)
-                {
-                    _port = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public bool DelayPortDetect
-        {
-            get => _delayPortDetect;
-            set
-            {
-                if (_delayPortDetect != value)
-                {
-                    _delayPortDetect = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public bool WaitExit
-        {
-            get => _waitExit;
-            set
-            {
-                if (_waitExit != value)
-                {
-                    _waitExit = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-    }
-
-
-    public enum StatusEnums
-    { 
-         Running,
-         Stopped,
-         Starting
-        
     }
 
 }

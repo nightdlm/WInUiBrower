@@ -1,10 +1,5 @@
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.Web.WebView2.Core;
 using System;
-using System.Diagnostics;
-using System.IO;
-using System.Net.Http;
-using System.Runtime.InteropServices.WindowsRuntime;
 using WInUiBrower.Model;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -44,8 +39,10 @@ namespace WInUiBrower.Views
         private void Page_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
             BrowerConfig.CoreWebView2Initialized += InitWebView;
-
-            BrowerConfig.Source = new Uri(DynamicContants.Instance.Url);
+            if (DynamicContants.Instance.Url != null && DynamicContants.Instance.Url.Trim() != "")
+            {
+                BrowerConfig.Source = new Uri(DynamicContants.Instance.Url);
+            }
             
         }
 
